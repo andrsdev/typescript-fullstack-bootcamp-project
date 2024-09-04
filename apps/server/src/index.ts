@@ -17,3 +17,5 @@ const port = process.env.PORT || 5001
 app.listen(port, () => {
   console.log(`Server API running on http://localhost:${port}`)
 })
+
+// pnpm dev -> runs each app with turborepo
