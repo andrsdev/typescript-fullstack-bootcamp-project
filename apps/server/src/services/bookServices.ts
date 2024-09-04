@@ -1,4 +1,4 @@
-import { Book } from '../model/book';
+import { Book } from '../model/bookModel';
 import { prisma } from '../lib/prismaClient'
 
 export class bookServices {
@@ -12,4 +12,5 @@ export class bookServices {
         }))
 
     }
+    
 }
