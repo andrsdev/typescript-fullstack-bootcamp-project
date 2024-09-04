@@ -3,14 +3,14 @@ import { prisma } from '../../lib/prismaClient';
 
 export function productRouter(app: Express): void {
     const router = express.Router();
-    app.use('api/products', router);
+    app.use('/api/products', router);
 
     router.get('/', async (_req, res, next) => {
         try {
           const products = await prisma.product.findMany({
             include: { variants: true, collections: true },
           });
-          res.status(200).json(products);
+          res.status(200).json({statusCode: 200, data: products});
         } catch (error) {
           next({ statusCode: 500, message: 'Error fetching products '});
         }
@@ -26,7 +26,7 @@ export function productRouter(app: Express): void {
           if (!product) {
             return next({ statusCode: 404, message: 'Product not found'});
           }
-          res.status(200).json(product);
+          res.status(200).json({statusCode: 200,data: product});
         } catch (error) {
           next({ statusCode: 500, message: 'Error fetching product'});
         }
@@ -38,7 +38,7 @@ export function productRouter(app: Express): void {
           const newProduct = await prisma.product.create({
             data: { name, description, price },
           });
-          res.status(201).json(newProduct);
+          res.status(201).json({statusCode:200, message:'The product was successfully created',data:newProduct});
         } catch (error) {
           next({ statusCode: 500, message: 'Fail during creation of product'});
         }
@@ -52,7 +52,7 @@ export function productRouter(app: Express): void {
             where: { id: Number(id) },
             data: { name, description, price },
           });
-          res.status(200).json(updatedProduct);
+          res.status(200).json({statusCode: 200, message: 'Success',data: updatedProduct});
         } catch (error) {
           next({ statusCode: 500, message: 'Product update failed'});
         }
@@ -64,7 +64,7 @@ export function productRouter(app: Express): void {
           await prisma.product.delete({
             where: { id: Number(id) },
           });
-          res.status(204).json({ message: 'Product deleted' });
+          res.status(204).json({ statusCode: 204 ,message: 'Product deleted' });
         } catch (error) {
           next({ statusCode: 500, message: 'Product deletion failed'});
         }
