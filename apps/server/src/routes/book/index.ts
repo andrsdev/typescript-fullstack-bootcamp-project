@@ -1,32 +1,32 @@
 import express, {Express} from 'express'
-import { bookServices } from '../../services/bookServices'
+
 import { prisma } from '../../lib/prismaClient'
 
 export function bookRoute(app: Express): void {
     const router = express.Router()
-    const service = new bookServices()
+    
     
     app.use('/api/book', router)
 
-    router.get('/', async function (_req, res, next) {
-        try{
-          const result = await service.getBook()
-        return res.json({ result })
-         } catch (e){
-            next(e)
-        }
-    })
+    router.get('/', async (req, res) => {
+      try {
+        const products = await prisma.product.findMany();
+        res.json(products);
+      } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch products' });
+      }
+    });
     router.post('/', async (req, res) => {
-        const {isbn, title,publicationDate, pageCount, language,author } = req.body;
+        const {name,author,image,price,variation,collection} = req.body;
         try {
-          const newBook = await prisma.book.create({
+          const newBook = await prisma.product.create({
             data: {
-                isbn,
-                title,
-                publicationDate,
-                pageCount,
-                language,
-                author: { connect: { id: 1 } }
+              name,
+              author,
+              image,
+              price,
+              variation: { connect: { id: 1 } },
+              collection: { connect: { id: 1 } }
             },
           });
           res.status(201).json(newBook);
@@ -36,17 +36,15 @@ export function bookRoute(app: Express): void {
       });
       router.put('/:id', async (req, res) => {
         const { id } = req.params;
-        const {isbn, title,publicationDate, pageCount, language,author } = req.body;
+        const {name,author,image,price } = req.body;
         try {
-          const updatedBook = await prisma.book.update({
+          const updatedBook = await prisma.product.update({
             where: { id: parseInt(id) },
             data: {
-                isbn,
-                title,
-                publicationDate,
-                pageCount,
-                language,
-                author: { connect: { id: 1 } }
+                name,
+                author,
+                image,
+                price
             },
           });
           res.json(updatedBook);
@@ -57,7 +55,7 @@ export function bookRoute(app: Express): void {
       router.delete('/:id', async (req, res) => {
         const { id } = req.params;
         try {
-          await prisma.book.delete({
+          await prisma.product.delete({
             where: { id: parseInt(id) },
           });
           res.json({ message: 'Product deleted' });
