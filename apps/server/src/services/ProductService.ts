@@ -1,11 +1,11 @@
 import { prisma } from '../lib/prismaClient'
-// import { Product } from '../model/Product'
+import { Product } from '@repo/shared'
 
 export class ProductService {
-  async getProducts() {
-    const products = await prisma.product.findMany()
-    return products
-  }
+  // async getProducts() {
+  //   const products = await prisma.product.findMany()
+  //   return products
+  // }
 
   async deleteProduct(id: number) {
     // This will delete all the variants associated with the product id
@@ -51,14 +51,14 @@ export class ProductService {
   }
 
   //This can be use if we want to return specific fields
-  //   async getProducts(): Promise<Product[]> {
-  //     const products = await prisma.product.findMany()
-  //     return products.map((product) => {
-  //       return {
-  //         name: product.name,
-  //         price: product.price,
-  //         description: product.description ?? '',
-  //       }
-  //     })
-  //   }
+  async getProducts(): Promise<Product[]> {
+    const products = await prisma.product.findMany()
+    return products.map((product) => {
+      return {
+        name: product.name,
+        price: product.price,
+        description: product.description ?? '',
+      }
+    })
+  }
 }

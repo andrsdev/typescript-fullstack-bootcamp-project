@@ -42,6 +42,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/config-eslint
+      '@repo/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/config-typescript
@@ -90,6 +93,9 @@ importers:
       '@repo/db':
         specifier: workspace:*
         version: link:../../packages/database
+      '@repo/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
@@ -160,6 +166,8 @@ importers:
       tsx:
         specifier: ^4.17.0
         version: 4.17.0
+
+  packages/shared: {}
 
 packages:
 
