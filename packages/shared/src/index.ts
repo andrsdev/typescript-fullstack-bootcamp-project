@@ -1,2 +1,5 @@
 export * from './dtos/list-products-response'
 export * from './models/products'
+export * from './models/collections'
+export * from './dtos/collection-response'
+export * from './models/sort-products'

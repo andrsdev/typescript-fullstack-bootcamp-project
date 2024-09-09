@@ -1,12 +1,46 @@
 import { Router, Response, NextFunction } from 'express'
 import { ProductService } from '../../services/ProductService'
+import { sortProduct } from '@repo/shared'
 
 export const productRouter: Router = Router()
 const productService = new ProductService()
 
-productRouter.get('/products', async (_, res: Response, next: NextFunction) => {
+const productSortby: sortProduct = {
+  PRICE_LOW_TO_HIGH: 'low-to-high',
+  PRICE_HIGH_TO_LOW: 'high-to-low',
+}
+productRouter.get(
+  '/products',
+  async (req, res: Response, next: NextFunction) => {
+    try {
+      const sort = req.query.sort as string
+      let orderBy = {}
+      if (sort === productSortby.PRICE_LOW_TO_HIGH) {
+        orderBy = {
+          price: 'asc',
+        }
+      } else if (sort === productSortby.PRICE_HIGH_TO_LOW) {
+        orderBy = {
+          price: 'desc',
+        }
+      } else {
+        orderBy = {
+          id: 'asc',
+        }
+      }
+      const result = await productService.getProducts(orderBy)
+      return res.json({ result })
+    } catch (error) {
+      next(error)
+    }
+  },
+)
+
+productRouter.get('/products/product-by-id/:id', async (req, res, next) => {
+  const { id } = req.params
+  const productId = Number(id)
   try {
-    const result = await productService.getProducts()
+    const result = await productService.getProductById(productId)
     return res.json({ result })
   } catch (error) {
     next(error)
@@ -52,6 +86,50 @@ productRouter.put('/products/update', async (req, res, next) => {
       description,
     )
     return res.json({ message: 'Product updated successfully' })
+  } catch (error) {
+    next(error)
+  }
+})
+
+productRouter.get('/products/search', async (req, res, next) => {
+  // Usage - http://localhost:5001/api-v1/products/search?product_name=name
+  try {
+    const product_name = req.query.product_name
+
+    if (!product_name) {
+      return res.status(400).json({ message: 'Product is not in stock' })
+    }
+
+    const result = await productService.getProductByName(String(product_name))
+    return res.json({ result })
+  } catch (error) {
+    next(error)
+  }
+})
+
+productRouter.get('/products/collections', async (req, res, next) => {
+  try {
+    const collection_name = req.query.collection_name as string
+    const sort = req.query.sort as string
+    let orderBy = {}
+    if (sort === productSortby.PRICE_LOW_TO_HIGH) {
+      orderBy = {
+        price: 'asc',
+      }
+    } else if (sort === productSortby.PRICE_HIGH_TO_LOW) {
+      orderBy = {
+        price: 'desc',
+      }
+    } else {
+      orderBy = {
+        id: 'asc',
+      }
+    }
+    const result =
+      collection_name === 'All'
+        ? await productService.getProducts(orderBy)
+        : await productService.getProductsByCollection(collection_name, orderBy)
+    return res.json({ result })
   } catch (error) {
     next(error)
   }

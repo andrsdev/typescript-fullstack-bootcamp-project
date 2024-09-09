@@ -2,6 +2,7 @@ import bodyParser from 'body-parser'
 import express from 'express'
 import cors from 'cors'
 import { productRouter } from './routes/products'
+import { collectionRouter } from './routes/collections'
 import { logErrors } from './middlewares/logErrorMiddleware'
 import { healthchecker } from './routes/health/helthchecker'
 import { healthcheckerMiddleware } from './middlewares/helthcheckerMiddleware'
@@ -14,6 +15,7 @@ app.use(cors())
 
 app.use(healthcheckerMiddleware)
 app.use('/api-v1', productRouter)
+app.use('/api-v1', collectionRouter)
 app.use('/api-v1', healthchecker)
 app.use(logErrors)
 
