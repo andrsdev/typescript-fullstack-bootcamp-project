@@ -7,7 +7,7 @@
     "scripts": {
         "db:start": "docker-compose up -d",
         "db:stop": "docker compose down",
-        "db:seed": "tsx ./src/seed.ts",
+        "db:seed": "tsx ./src/seeds.ts",
         "db:generate": "prisma generate",
         "db:migrate": "prisma db push --skip-generate"
     },
