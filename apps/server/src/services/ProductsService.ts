@@ -13,6 +13,24 @@ export class ProductsService {
         });
     }
 
+    // Obtiene un producto por ID
+    async getProductById(productId: number) {
+        try {
+            const product = await prisma.product.findUnique({
+                where: { id: productId },
+                include: {
+                    variants: true, // Incluye las variantes del producto, si tiene
+                    collections: true, // Incluye las colecciones del producto, si hay
+                },
+            });
+
+            return product;
+        } catch (error) {
+            console.error('Error fetching product by ID:', error);
+            throw new Error('Error fetching product by ID');
+        }
+    }
+
     // Delete a product
     async deleteProduct(id: number){
         await prisma.product.delete({
