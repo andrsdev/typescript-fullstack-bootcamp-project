@@ -7,9 +7,14 @@ const app = express()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(cors())
+app.use(cors());
+
 
 productsRoute(app);
+
+app.get('/app/products', (req, res) => {
+  res.json({ message: 'Aquí están los productos' });
+});
 
 const port = process.env.PORT || 5001
 

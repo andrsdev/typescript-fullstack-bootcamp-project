@@ -9,16 +9,54 @@ export function productsRoute (app: Express):void {
 
     app.use('/app/products', router);
 
-    // Gets a Product
-    router.get('/', async function (_req, res, next) {
+    // Get all products or search for products by name
+    router.get('/', async function (req, res, next) {
         try {
-            const result = await service.getProducts();
-            return res.json({ result })
-        } catch(e) {
-            next(e)
+            const search = req.query.search as string | undefined; // Extraemos el parámetro de búsqueda si existe
+            let result;
+
+            if (search) {
+                // Si hay un término de búsqueda, filtramos por nombre
+                result = await prisma.product.findMany({
+                    where: {
+                        name: {
+                            contains: search,
+                            mode: 'insensitive', // Búsqueda insensible a mayúsculas/minúsculas
+                        },
+                    },
+                    include: {
+                        variants: true,
+                        collections: true,
+                    },
+                });
+            } else {
+                // Si no hay búsqueda, devolvemos todos los productos
+                result = await service.getProducts();
+            }
+
+            return res.json({ result });
+        } catch (e) {
+            console.error(`Error Getting Products: ${e}`);
+            return res.status(500).json({ error: 'Error fetching products' });
         }
-        
-    })
+    });
+
+    // Gets a single product by ID
+    router.get('/:id', async function (req, res, next) {
+        try {
+            const productId = parseInt(req.params.id);
+            const result = await service.getProductById(productId);
+            
+            if (!result) {
+                return res.status(404).json({ error: 'Product not found' });
+            }
+
+            return res.json({ result });
+        } catch (e) {
+            console.error(`Error fetching product by ID: ${e}`);
+            return res.status(500).json({ error: 'Server error' });
+        }
+    });
 
     // Delete a product
     router.delete('/:id', async function (req, res, next) {
@@ -53,5 +91,6 @@ export function productsRoute (app: Express):void {
             console.error(`Error Creating product ${e}`);
         }
     });
+
 }
 
