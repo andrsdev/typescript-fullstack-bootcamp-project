@@ -1,40 +1,60 @@
+import { ProductDtoRequest } from './../../../../packages/schemas/src/dtos/request/ProductDtoRequest';
 import { prisma } from "../lib/prismaClient";
-import { Product } from "../models/Product";
+import { Product, ProductDtoResponse } from "@repo/schemas";
+import { format, parse } from 'date-fns'
 
 interface IProductService {
-    ListAsync(): void;
-    FindByIdAsync(id: number): void;
-    AddAsync(request: Product): void;
-    UpdateAsync(id: number, request: Product): void;
-    DeleteAsync(id: number): void;
+    ListAll(): void;
+    GetById(id: number): void;
+    Add(request: ProductDtoRequest): void;
+    Update(id: number, request: ProductDtoRequest): void;
+    Delete(id: number): void;
 }
 
 export class ProductService implements IProductService {
-    async AddAsync(request: Product) {
-        let value = new Product({
-            name: request.name,
-            description: request.description,
-            image: request.image
-        })
+    async Add(request: ProductDtoRequest) {
         const product = await prisma.product.create({
             data: {
-                name: value.name,
-                description: value.description,
+                name: request.name,
+                description: request.description,
                 image: request.image,
+                releaseDate: parse(request.releaseDate.toString(), 'dd-MM-yyyy', new Date()),
+                developer: request.developer,
+                publisher: request.publisher,
+                createdAt: new Date(),
+                genres: {
+                    connect:
+                        request.genres?.map(genre => ({
+                            id: genre.id
+                        }))
+                },
+                variants: {
+                    connect:
+                        request.variants?.map(variant => ({
+                            id: variant.id
+                        }))
+                },
+                collections: {
+                    connect:
+                        request.collections?.map(collection => ({
+                            id: collection.id
+                        }))
+                }
             }
         })
         return product
 
     }
-    async UpdateAsync(id: number, request: Product) {
+    
+    async Update(id: number, request: ProductDtoRequest) {
         const data = await prisma.product.findUnique({
             where: {
                 id: id
             }
         })
 
-        if(data === null){
-            throw new Error(`Product with Id ${id} not found`)
+        if (data === null) {
+            throw new Error(`Product with id ${id} not found`)
         }
 
         const updatedData = await prisma.product.update({
@@ -45,13 +65,34 @@ export class ProductService implements IProductService {
                 name: request.name,
                 description: request.description,
                 image: request.image,
-                updatedAt: new Date()
+                releaseDate: parse(request.releaseDate.toString(), 'dd-MM-yyyy', new Date()),
+                developer: request.developer,
+                publisher: request.publisher,
+                updatedAt: new Date(),
+                genres: {
+                    connect:
+                        request.genres?.map(genre => ({
+                            id: genre.id
+                        }))
+                },
+                variants: {
+                    connect:
+                        request.variants?.map(variant => ({
+                            id: variant.id
+                        }))
+                },
+                collections: {
+                    connect:
+                        request.collections?.map(collection => ({
+                            id: collection.id
+                        }))
+                }
             }
         })
         return updatedData
     }
 
-    async DeleteAsync(id: number) {
+    async Delete(id: number) {
         const data = await prisma.product.findUnique({
             where: {
                 id: id
@@ -59,7 +100,7 @@ export class ProductService implements IProductService {
         })
 
         if (data === null) {
-            throw new Error(`Product with Id ${id} not found`)
+            throw new Error(`Product with id ${id} not found`)
         }
 
         const product = await prisma.product.delete({
@@ -69,26 +110,49 @@ export class ProductService implements IProductService {
         })
         return product
     }
-    async ListAsync(): Promise<Product[]> {
+    async ListAll(): Promise<ProductDtoResponse[]> {
         const products = await prisma.product.findMany()
-        return products.map<Product>(product => ({
+        return products.map(product => ({
             id: product.id,
             name: product.name,
             description: product.description ?? '',
             image: product.image ?? '',
+            releaseDate: format(product.releaseDate, 'dd-MM-yyyy'),
+            developer: product.developer,
+            publisher: product.publisher,
+
         }))
     }
 
-    async FindByIdAsync(id: number) {
+    async GetById(id: number) {
         const product = await prisma.product.findUnique({
             where: {
                 id: id
             },
             include: {
+                genres: true,
                 variants: true,
                 collections: true
             }
         })
-        return product
+
+        if (product === null) {
+            return null
+        }
+
+        const productFound: ProductDtoResponse = {
+            id: product.id,
+            name: product.name,
+            description: product.description ?? '',
+            image: product.image ?? '',
+            genres: product.genres,
+            releaseDate: format(product.releaseDate, 'dd-MM-yyyy'),
+            developer: product.developer,
+            publisher: product.publisher,
+            variants: product.variants,
+            collections: product.collections,
+
+        }
+        return productFound
     }
 }
