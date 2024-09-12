@@ -1,33 +1,45 @@
-import { Collection, PrismaClient } from '@prisma/client'
+import { PrismaClient, Collection } from '@prisma/client'
 import { faker } from '@faker-js/faker'
 
 const prisma = new PrismaClient()
 
 async function main() {
-  // Create Collections
+  // Create Collections related to shoes
   const collections: Collection[] = []
-  for (let i = 0; i < 3; i++) {
+  const collectionNames = ['Sneakers', 'Formal Shoes', 'Sandals']
+  for (let i = 0; i < collectionNames.length; i++) {
     const collection = await prisma.collection.create({
       data: {
-        name: faker.commerce.department(),
+        name: collectionNames[i],
         description: faker.lorem.sentence(),
       },
     })
     collections.push(collection)
   }
 
-  // Create Products with Variants
+  // Create Shoe Products with Variants
   for (let i = 0; i < 5; i++) {
     const product = await prisma.product.create({
       data: {
-        name: faker.commerce.productName(),
+        name: faker.helpers.arrayElement([
+          'Air Max 270',
+          'Classic Leather',
+          'Chelsea Boots',
+          'Canvas Slip-Ons',
+          'Running Shoes',
+        ]),
         description: faker.commerce.productDescription(),
-        image: faker.image.imageUrl(),
+        image: faker.image.imageUrl(640, 480, 'shoes', true), // Image related to shoes
         price: parseFloat(faker.commerce.price(50, 300)),
         variants: {
           create: Array.from({ length: 3 }, () => ({
             size: faker.helpers.arrayElement(['7', '8', '9', '10', '11']),
-            color: faker.color.human(),
+            color: faker.helpers.arrayElement([
+              'Red',
+              'Blue',
+              'Black',
+              'White',
+            ]),
             stock: faker.datatype.number({ min: 1, max: 100 }),
             sku: faker.datatype.uuid(),
           })),
@@ -40,7 +52,7 @@ async function main() {
       },
     })
 
-    // Optionally, connect the product to another collection
+    // Optionally, connect the product to another shoe-related collection
     if (faker.datatype.boolean()) {
       await prisma.product.update({
         where: { id: product.id },
@@ -55,13 +67,12 @@ async function main() {
     }
   }
 
-  console.log('Seed data created successfully!')
+  console.log('Shoe-related seed data created successfully!')
 }
 
 main()
   .catch((e) => {
     console.error(e)
-    // process.exit(1)
   })
   .finally(async () => {
     await prisma.$disconnect()
