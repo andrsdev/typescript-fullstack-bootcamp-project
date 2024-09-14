@@ -3,14 +3,15 @@ import { Genre } from "../../models/Genre";
 import { Variant } from "../../models/Variant";
 
 export interface ProductDtoResponse {
-    id?: number;
+    id: number;
     name: string;
     description: string | null;
     image?: string;
-    releaseDate: Date | string;
+    price: number;
+    releaseDate?: Date | string;
     genres?: Genre[];
     developer: string;
     publisher: string;
-    variants?: Variant[];
+    variants: Variant[];
     collections?: Collection[];
 }

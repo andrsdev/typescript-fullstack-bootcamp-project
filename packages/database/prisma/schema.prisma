@@ -12,6 +12,7 @@ model Product {
   name String
   description String?
   image String?
+  price Decimal
   releaseDate DateTime @default(now())
   genres Genre[]
   developer String @default("null")
@@ -36,9 +37,9 @@ model Variant{
   product Product? @relation(fields: [productId], references: [id])
   productId Int?
   name String
-  description String?
+  description String? 
   image String?
-  price Int
+  price Decimal
   stock Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
