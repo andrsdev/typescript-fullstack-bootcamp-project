@@ -1,4 +1,5 @@
 import { useCart } from '../../Contextapi/CartProvider'
+import { priceFormatter } from '../../utils'
 
 export const Cart = () => {
   const { state, dispatch } = useCart()
@@ -29,7 +30,7 @@ export const Cart = () => {
         ))}
       </ul>
       <p className="text-xl font-semibold text-gray-800 mb-4">
-        Total: ${state.total}
+        Total: {priceFormatter(state.total)}
       </p>
       <button
         onClick={() => dispatch({ type: 'CLEAR_CART' })}
