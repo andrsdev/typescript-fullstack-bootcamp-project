@@ -2,9 +2,9 @@ export type Variant = {
     id: number;
     productId: number | null;
     name: string;
-    image: string | null;
+    image?: string | null;
     price: number;
     stock: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

@@ -6,6 +6,7 @@ export interface ProductDtoRequest{
     name: string;
     description: string | null;
     image: string | null;
+    price: number;
     releaseDate: Date | string;
     genres?: Genre[];
     developer: string;

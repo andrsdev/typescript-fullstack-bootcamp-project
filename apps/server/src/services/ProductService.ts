@@ -18,6 +18,7 @@ export class ProductService implements IProductService {
                 name: request.name,
                 description: request.description,
                 image: request.image,
+                price: request.price,
                 releaseDate: parse(request.releaseDate.toString(), 'dd-MM-yyyy', new Date()),
                 developer: request.developer,
                 publisher: request.publisher,
@@ -65,6 +66,7 @@ export class ProductService implements IProductService {
                 name: request.name,
                 description: request.description,
                 image: request.image,
+                price: request.price,
                 releaseDate: parse(request.releaseDate.toString(), 'dd-MM-yyyy', new Date()),
                 developer: request.developer,
                 publisher: request.publisher,
@@ -111,15 +113,26 @@ export class ProductService implements IProductService {
         return product
     }
     async ListAll(): Promise<ProductDtoResponse[]> {
-        const products = await prisma.product.findMany()
+        const products = await prisma.product.findMany({
+            include:{
+                genres: true,
+                variants: true,
+                collections: true
+            }
+        })
         return products.map(product => ({
             id: product.id,
             name: product.name,
             description: product.description ?? '',
             image: product.image ?? '',
+            price: product.price.toNumber(),
             releaseDate: format(product.releaseDate, 'dd-MM-yyyy'),
             developer: product.developer,
             publisher: product.publisher,
+            variants: product.variants.map(variant =>({
+                ...variant,
+                price: variant.price.toNumber()
+            })),
 
         }))
     }
@@ -145,11 +158,15 @@ export class ProductService implements IProductService {
             name: product.name,
             description: product.description ?? '',
             image: product.image ?? '',
+            price: product.price.toNumber(),
             genres: product.genres,
             releaseDate: format(product.releaseDate, 'dd-MM-yyyy'),
             developer: product.developer,
             publisher: product.publisher,
-            variants: product.variants,
+            variants: product.variants.map(variant =>({
+                ...variant,
+                price: variant.price.toNumber()
+            })),
             collections: product.collections,
 
         }
