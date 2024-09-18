@@ -3,7 +3,8 @@ import { useDetails } from '../hooks'
 import { useState } from 'react'
 import { useCart } from '../Contextapi/CartProvider'
 import { Modal } from '../components/Modal'
-import { Cart } from '../components'
+import { Cart, VariantSelector } from '../components'
+import { priceFormatter } from '../utils'
 
 const ProductDetails = () => {
   const { productId } = Route.useParams()
@@ -72,7 +73,7 @@ const ProductDetails = () => {
             {data?.result[0].name}
           </h1>
           <p className="text-lg text-gray-600 mt-2">
-            ${data?.result[0].price} USD
+            {priceFormatter(data?.result[0].price ?? 0)}
           </p>
           <p className="text-gray-700 mt-4">{data?.result[0].description}</p>
 
@@ -86,64 +87,31 @@ const ProductDetails = () => {
               </h2>
 
               {/* Colors */}
-              <div className="mt-4">
-                <p>Colors</p>
-                <div className="flex space-x-2 mt-2">
-                  {data?.result[0].variants.map((variant, index) => (
-                    <button
-                      key={index}
-                      className={`px-4 py-2 rounded-lg border-2 ${
-                        selectedColor === variant.color
-                          ? 'border-indigo-600'
-                          : 'border-gray-300'
-                      }`}
-                      onClick={() => handleSelect('color', variant.color)}
-                    >
-                      {variant.color}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <VariantSelector
+                label="Colors"
+                variants={data?.result[0].variants}
+                selectedValue={selectedColor}
+                variantKey="color"
+                handleSelect={handleSelect}
+              />
 
               {/* Sizes */}
-              <div className="mt-4">
-                <p>Sizes</p>
-                <div className="flex space-x-2 mt-2">
-                  {data?.result[0].variants.map((variant, index) => (
-                    <button
-                      key={index}
-                      className={`px-4 py-2 rounded-lg border-2 ${
-                        selectedSize === variant.size
-                          ? 'border-indigo-600'
-                          : 'border-gray-300'
-                      }`}
-                      onClick={() => handleSelect('size', variant.size)}
-                    >
-                      {variant.size}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <VariantSelector
+                label="Size"
+                variants={data?.result[0].variants}
+                selectedValue={selectedSize}
+                variantKey="size"
+                handleSelect={handleSelect}
+              />
 
               {/* Stock */}
-              <div className="mt-4">
-                <p>Stock</p>
-                <div className="flex space-x-2 mt-2">
-                  {data?.result[0].variants.map((variant, index) => (
-                    <button
-                      key={index}
-                      className={`px-4 py-2 rounded-lg border-2 ${
-                        selectedStock === variant.stock
-                          ? 'border-indigo-600'
-                          : 'border-gray-300'
-                      }`}
-                      onClick={() => handleSelect('stock', variant.stock)}
-                    >
-                      {variant.stock}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <VariantSelector
+                label="Stock"
+                variants={data?.result[0].variants}
+                selectedValue={selectedStock}
+                variantKey="stock"
+                handleSelect={handleSelect}
+              />
               {/* Footer button */}
               <div className="flex space-x-4">
                 <button
@@ -152,15 +120,6 @@ const ProductDetails = () => {
                 >
                   Add to Cart
                 </button>
-                {/* <button
-                  onClick={handleOpenCart}
-                  className="relative flex items-center px-4 justify-center rounded-lg border-2 text-white p-2 rounded-full shadow-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                >
-                  <span className="text-lg">🛍️</span>
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                    {state.items.length}
-                  </span>
-                </button> */}
               </div>
             </div>
           )}

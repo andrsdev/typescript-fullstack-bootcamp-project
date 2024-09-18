@@ -1,8 +1,10 @@
 import { Product } from '@repo/shared'
 import { Link } from '@tanstack/react-router'
+import { priceFormatter } from '../../utils'
 interface ProductCardProps {
   product: Product
 }
+
 export const ProductCard = (props: ProductCardProps) => {
   const { product } = props
   return (
@@ -20,7 +22,7 @@ export const ProductCard = (props: ProductCardProps) => {
                 {product.name}
               </p>
               <button className="bg-indigo-600 text-white text-sm font-bold py-1 px-4 rounded-full hover:bg-indigo-500 transition-colors duration-300">
-                ${product.price} USD
+                {priceFormatter(product.price)}
               </button>
             </div>
           </div>
