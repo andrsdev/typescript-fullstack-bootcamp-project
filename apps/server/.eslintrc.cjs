@@ -5,4 +5,10 @@ module.exports = {
   parserOptions: {
     project: true,
   },
+  overrides: [{
+    files:['./src/**/*.{test.spec}.{ts,js,tsx,jsx}'],
+    evn:{
+      jest:true
+    }
+  }]
 }

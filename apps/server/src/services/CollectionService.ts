@@ -11,13 +11,19 @@ interface ICollectionService {
 }
 
 export class CollectionService implements ICollectionService {
-    async ListAll(){
-        const collections = await prisma.collection.findMany();
+    async ListAll() {
+        const collections = await prisma.collection.findMany(
+            {
+                orderBy: {
+                    name: 'asc'
+                },
+            }
+        );
         return collections.map(collection => ({
             id: collection.id,
             name: collection.name,
             description: collection.description,
-            manufacturer: collection.manufacturer  
+            manufacturer: collection.manufacturer,
         }));
     }
     async GetById(id: number) {
@@ -63,7 +69,7 @@ export class CollectionService implements ICollectionService {
                 description: request.description,
                 manufacturer: request.manufacturer,
                 updatedAt: new Date(),
-                products:{
+                products: {
                     connect:
                         request.products?.map(product => ({
                             id: product.id
@@ -72,7 +78,7 @@ export class CollectionService implements ICollectionService {
             }
         })
     }
-    async Delete(id: number){
+    async Delete(id: number) {
         const data = await prisma.collection.findUnique({
             where: {
                 id: id
