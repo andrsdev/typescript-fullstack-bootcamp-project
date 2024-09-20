@@ -10,9 +10,9 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
     const navigate = useNavigate();
 
-  const handleViewMore = () => {
-    navigate({ to: `/product/${product?.id}`}); // Pasando el producto como estado
-  };
+    const handleViewMore = () => {
+        navigate({ to: `/product/${product?.id}` }); // Pasando el producto como estado
+    };
 
     if (!product) {
         return <div>null</div>;
