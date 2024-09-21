@@ -1,50 +1,10 @@
 import request from 'supertest'
 import express from 'express'
 import { productRouter } from './index'
-import { ProductService } from '../../services/ProductService'
 
 const app = express()
 
 app.use('/api-v1', productRouter)
-
-// jest.mock('../../services/ProductService', () => {
-//   return {
-//     ProductService: jest.fn().mockImplementation(() => {
-//       return {
-//         getProducts: jest.fn((sort) => {
-//           if (sort.price === 'desc') {
-//             return Promise.resolve([
-//               {
-//                 id: 2,
-//                 name: 'Product 2',
-//                 price: 200,
-//               },
-//               {
-//                 id: 1,
-//                 name: 'Product 1',
-//                 price: 100,
-//               },
-//             ])
-//           } else if (sort.price === 'asc') {
-//             return Promise.resolve([
-//               {
-//                 id: 1,
-//                 name: 'Product 1',
-//                 price: 100,
-//               },
-//               {
-//                 id: 2,
-//                 name: 'Product 2',
-//                 price: 200,
-//               },
-//             ])
-//           }
-//           return Promise.resolve([])
-//         }),
-//       }
-//     }),
-//   }
-// })
 
 jest.mock('../../services/ProductService', () => {
   return {
