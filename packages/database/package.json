@@ -9,7 +9,7 @@
         "db:stop": "docker compose down",
         "db:seed": "tsx ./src/seeds.ts",
         "db:generate": "prisma generate",
-        "db:migrate": "prisma db push --skip-generate"
+        "db:migrate": "prisma db push --skip-generate --accept-data-loss"
     },
     "devDependencies": {
         "@faker-js/faker": "^8.4.1",
