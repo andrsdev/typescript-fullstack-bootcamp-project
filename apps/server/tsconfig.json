@@ -2,8 +2,11 @@
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
     "lib": ["ES2015"],
-    "outDir": "./dist",
-    "strict": true
+    "outDir": "./dist"
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "verbose": false
   },
   "exclude": ["node_modules"],
   "include": ["src"]

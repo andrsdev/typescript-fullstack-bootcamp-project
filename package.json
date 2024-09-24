@@ -2,10 +2,7 @@
   "name": "repo",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "start": "turbo start",
+    
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md}\"",
     "prepare": "husky"
   },
@@ -13,6 +10,8 @@
     "@commitlint/cli": "19.4.0",
     "@commitlint/config-conventional": "19.2.2",
     "@commitlint/types": "^19.0.3",
+    "@playwright/test": "^1.47.1",
+    "@types/node": "^22.5.1",
     "eslint": "8.57.0",
     "husky": "9.1.5",
     "prettier": "3.3.2",

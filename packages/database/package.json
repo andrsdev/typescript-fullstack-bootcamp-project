@@ -1,23 +1,35 @@
 {
     "name": "@repo/db",
     "version": "0.0.0",
+    "type": "module",
     "scripts": {
         "db:start": "docker-compose up -d",
         "db:stop": "docker-compose down",
-        "db:seed": "tsx ./src/seed.ts",
+        "db:seed": "tsx ./src/seed/index.ts",
+        "db:cleanup": "tsx ./src/cleanup/index.ts",
         "db:generate": "prisma generate",
-        "db:migrate": "prisma db push --skip-generate"
+        "db:migrate": "prisma db push --skip-generate",
+        "build": "tsc && tsc-alias"
     },
     "dependencies": {
         "@prisma/client": "5.19.0"
     },
     "devDependencies": {
         "@faker-js/faker": "^8.4.1",
-        "@types/node":"^22.5.1",
+        "@repo/eslint-config": "workspace:*",
+        "@repo/typescript-config": "workspace:*",
+        "@types/node": "^22.5.1",
+        "prisma": "5.19.0",
+        "tsc-alias": "^1.8.10",
         "tsx": "^4.19.0",
-        "prisma": "5.19.0"
+        "typescript": "^5.3.3"
     },
-    "exports":{
-        ".": "./src/index.ts"
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "default": "./dist/index.js"
+        },
+        "./seed": "./scripts/seed.ts",
+        "./cleanup": "./scripts/cleanup.ts"
     }
 }

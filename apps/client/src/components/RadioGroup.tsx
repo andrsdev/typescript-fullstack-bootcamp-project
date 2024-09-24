@@ -6,7 +6,7 @@ interface RadioGroupProps {
   children: ReactNode;
 }
 
-export function RadioGroup({ value, onValueChange, children }: RadioGroupProps) {
+export function RadioGroup({children }: RadioGroupProps) {
   return (
     <div role="radiogroup" className="flex space-x-4">
       {children}

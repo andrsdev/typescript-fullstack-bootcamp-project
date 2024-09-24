@@ -3,7 +3,7 @@ import { Input } from '../components/Input'
 import { ProductList } from '../components/ProductList'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Sidebar } from '../components/Sidebar'
-import React from 'react'
+
 
 
 const queryClient = new QueryClient()

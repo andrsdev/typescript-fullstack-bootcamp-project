@@ -149,30 +149,4 @@ export function productsRoute(app: Express): void {
             next(error)
         }
     })
-
-    // router.get('/products', async (req, res) => {
-    //     const { name, genres } = req.query;
-      
-    //     let filteredProducts = await _productService.ListAll();
-      
-    //     // Filtrar por nombre si se proporciona
-    //     if (name) {
-    //       filteredProducts = filteredProducts.filter(product =>
-    //         product.name.toLowerCase().includes(name.toLowerCase())
-    //       );
-    //     }
-      
-    //     // Filtrar por género si se proporciona
-    //     if (genres) {
-    //       filteredProducts = filteredProducts.filter(product =>
-    //         product.genres? === genres.toLowerCase()
-    //       );
-    //     }
-      
-    //     // Responder con los productos filtrados
-    //     res.json({
-    //       data: filteredProducts,
-    //       message: 'Products fetched successfully',
-    //     });
-    //   });
 }

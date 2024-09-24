@@ -1,4 +1,4 @@
-import { ProductDtoRequest } from './../../../../packages/schemas/src/dtos/request/ProductDtoRequest';
+import { ProductDtoRequest } from '@repo/schemas';
 import { prisma } from "../lib/prismaClient";
 import { Product, ProductDtoResponse } from "@repo/schemas";
 import { format, parse } from 'date-fns'
