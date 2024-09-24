@@ -16,7 +16,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               'https://devchallengesyf.s3.us-east-2.amazonaws.com/products/' +
               image
             }
-            alt=""
+            alt={name}
           />
           <p className="hide">View Product</p>
         </div>

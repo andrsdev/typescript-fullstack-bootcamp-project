@@ -30,6 +30,7 @@ export const Search: React.FC<SearchProps> = ({ onSearch }) => {
   return (
     <form ref={formRef} onSubmit={onSearchSubmit}>
       <input
+        id="input-search"
         type="search"
         placeholder="Search..."
         name="searchText"
