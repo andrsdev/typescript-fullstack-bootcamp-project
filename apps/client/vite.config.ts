@@ -7,6 +7,5 @@ export default defineConfig({
   server: {
     port: 3000, // Use port 3000 for your frontend
     open: true, // Automatically open the browser on server start
-    historyApiFallback: true, // This makes sure routes are handled by React Router
   },
 })

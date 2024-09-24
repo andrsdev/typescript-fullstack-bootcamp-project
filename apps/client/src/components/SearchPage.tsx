@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchProducts, fetchCollections } from '../api';
 
@@ -33,7 +33,7 @@ const SearchPage = () => {
     useEffect(() => {
         fetchCollections()
             .then((response) => setCollections(response.data))
-            .catch((err) => setError('Failed to load collections'));
+            .catch(() => setError('Failed to load collections'));
     }, []);
   
     useEffect(() => {
@@ -103,7 +103,7 @@ const SearchPage = () => {
                                 <h2 className="text-2xl font-bold mb-2">{product.name}</h2>
                                 <p className="text-gray-600 mb-4">{product.description}</p>
                                 {/* Display the lowest price */}
-                                <p className="text-lg font-bold mb-4">Price: ${(lowestPrice / 100).toFixed(2)}</p>
+                                <p className="text-lg font-bold mb-4">Lower Price: ${(lowestPrice / 100).toFixed(2)}</p>
                                 <img
                                     src={product.image}
                                     alt={product.name}

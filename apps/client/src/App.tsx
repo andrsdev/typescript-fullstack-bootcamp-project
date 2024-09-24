@@ -1,7 +1,7 @@
+import React from 'react'; // Add this line at the top of App.tsx
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SearchPage from './components/SearchPage';
 import ProductDetailPage from './components/ProductDetailPage';
-import { useState } from 'react';
 
 
 const App = () => {
