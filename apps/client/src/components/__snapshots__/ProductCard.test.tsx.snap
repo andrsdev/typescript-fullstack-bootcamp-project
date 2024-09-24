@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tests on <CardProduct /> Should match the snapshot 1`] = `
+<div>
+  <a
+    class="product-card-link"
+    to="/product/4"
+  >
+    <div
+      class="product-card"
+    >
+      <div
+        class="card-image-container"
+      >
+        <img
+          alt=""
+          src="https://devchallengesyf.s3.us-east-2.amazonaws.com/products/dog-shampoo.png"
+        />
+        <p
+          class="hide"
+        >
+          View Product
+        </p>
+      </div>
+      <p
+        class="card-title"
+      >
+        Dog Shampoo
+      </p>
+      <span
+        class="price-badge"
+      >
+        $9.99
+      </span>
+    </div>
+  </a>
+</div>
+`;
