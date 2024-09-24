@@ -20,7 +20,7 @@ export interface Product {
   }
   
   // Define la URL base de la API
-  const baseURL = 'http://localhost:5001/app/products';
+  const baseURL = 'http://localhost:3000/app/products';
   
   
 
