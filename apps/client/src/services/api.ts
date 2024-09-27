@@ -20,8 +20,10 @@ export interface Product {
   }
   
   // Define la URL base de la API
-  const baseURL = 'http://localhost:5001/app/products';
+  const baseURL = 'http://localhost:3000/app/products';
   
+  
+
   // Obtener todos los productos
   export const getProducts = async (): Promise<Product[]> => {
     try {
@@ -44,7 +46,6 @@ export interface Product {
     }
   };
   
-  // Obtener un producto por ID
   // Getting Product by ID
   export const getProductById = async (id: number): Promise<Product> => {
     try {
@@ -116,44 +117,6 @@ export interface Product {
       }
     }
   };
-
-
-// Busca un Producto por término de búsqueda
-// export const searchProducts = async (searchTerm: string = '', collectionId: number | null = null): Promise<Product[]> => {
-//   try {
-//     // Construye la URL con los parámetros de búsqueda y colección
-//     const url = new URL(`${baseURL}/products`);
-//     if (searchTerm) {
-//       url.searchParams.append('search', searchTerm);
-//     }
-//     if (collectionId !== null) {
-//       url.searchParams.append('collectionId', collectionId.toString());
-//     }
-
-//     // Realiza una llamada GET a la API con los parámetros
-//     const response = await fetch(url.toString(), {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-
-//     if (!response.ok) {
-//       throw new Error(`Failed to search products: ${response.statusText}`);
-//     }
-
-//     const data = await response.json();
-
-//     if (!data || !Array.isArray(data.result)) {
-//       throw new Error('Invalid data structure from API');
-//     }
-
-//     return data.result as Product[];
-//   } catch (error) {
-//     console.error('Error searching for products:', error);
-//     throw error;
-//   }
-// };
 
 export const searchProducts = async (searchTerm: string): Promise<Product[]> => {
   try {
