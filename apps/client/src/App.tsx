@@ -1,22 +1,20 @@
-import { useState } from 'react'
+// src/App.tsx
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/Homepage";
+import ProductDetail from './components/ProductDetail';
+import AddProduct from './components/AddProduct';
 
-function App() {
-  const [counter, setCounter] = useState(0)
-
+const App: React.FC = () => {
   return (
-    <main className="container flex flex-col gap-8 justify-center items-center min-h-screen p-8 text-center mx-auto">
-      <h1 className="text-5xl md:text-7xl font-bold text-balance max-w-screen-lg">
-        Welcome to the Typescript Fullstack Project!
-      </h1>
-      <p>This is the client starting point 🚀</p>
-      <button
-        className="px-4 py-2 rounded-md bg-blue-600 text-white"
-        onClick={() => setCounter((v) => v + 1)}
-      >
-        Clicks: {counter}
-      </button>
-    </main>
-  )
-}
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/add-product" element={<AddProduct />} />
+        
+      </Routes>
+    </Router>
+  );
+};
 
-export default App
+export default App;
