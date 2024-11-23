@@ -1,0 +1,10 @@
+2024-11-22T22:31:43.712465Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/.turbo-cookie"), AnchoredSystemPathBuf(".turbo/cookies/1.cookie")}
+2024-11-22T22:31:43.712477Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-11-22T23:21:47.380717Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/database/prisma/schema.prisma~"), AnchoredSystemPathBuf("packages/database/prisma/schema.prisma")}
+2024-11-22T23:21:47.380752Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@repo/db"), path: AnchoredSystemPathBuf("packages/database") }}))
+2024-11-22T23:27:11.877099Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/database/prisma/schema.prisma"), AnchoredSystemPathBuf("packages/database/prisma/schema.prisma~")}
+2024-11-22T23:27:11.877111Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@repo/db"), path: AnchoredSystemPathBuf("packages/database") }}))
+2024-11-22T23:27:40.676425Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/2.cookie")}
+2024-11-22T23:27:40.676435Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-11-22T23:27:44.576695Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/database/prisma/schema.prisma~"), AnchoredSystemPathBuf("packages/database/prisma/schema.prisma")}
+2024-11-22T23:27:44.576710Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@repo/db"), path: AnchoredSystemPathBuf("packages/database") }}))
