@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres_development:
+    image: postgres:latest
+    container_name: database_postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: development
+      POSTGRES_USER: develop
+      POSTGRES_PASSWORD: dev$123
+    volumes:
+      - db_postgres:/var/lib/postgresql/data
+
+volumes:
+  db_postgres:
